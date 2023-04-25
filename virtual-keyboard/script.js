@@ -96,7 +96,7 @@ function createHeader() {
 }
 
 function createKeyboard(keyboardData) {
-    debugger
+
     const keyboard = document.createElement('div')
     keyboard.classList.add('keyboard')
     document.querySelector('.wrapper').appendChild(keyboard)
@@ -142,7 +142,7 @@ function createKeyboard(keyboardData) {
             fifthLine.appendChild(elem)
         } else {
             const elem = createArrows()
-            firstLine.appendChild(elem)
+            fifthLine.appendChild(elem)
         }
     })
     keyboard.appendChild(fifthLine)
@@ -155,11 +155,13 @@ function createKey(keyData) {
 
     const firstValue = document.createElement('span')
     firstValue.innerHTML = keyData.value
+    firstValue.classList.add('key__first-value')
     key.appendChild(firstValue)
 
     if(keyData.secondValue !== null) {
         const secondValue = document.createElement('span')
         secondValue.innerHTML = keyData.secondValue
+        secondValue.classList.add('key__second-value')
         key.appendChild(secondValue)
     }
 

@@ -37,6 +37,15 @@ h1 {
 .key {
     background: lightblue;
     padding: 10px;
+    transition: all 0.3s;
+}
+
+.key:active {
+    background: salmon;
+}
+
+.key_active {
+    border: 1px solid salmon;
 }
 
 .key[data-type="number"],

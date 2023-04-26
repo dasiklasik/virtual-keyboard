@@ -212,6 +212,7 @@ function clickKey(e) {
     switch (value) {
         case 'shift':
             isShiftActive = true
+            document.querySelector('.key[data-type="shift"]').classList.add('key_active')
             return;
         case 'tab':
             return;

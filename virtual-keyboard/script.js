@@ -18,7 +18,7 @@ const englishKeyboardData = {
             {value: 'backspace', secondValue: null, type: 'backspace'}
         ],
         secondLine: [
-            {value: 'Tab', secondValue: null, type: 'tab'},
+            {value: 'tab', secondValue: null, type: 'tab'},
             {value: 'q', secondValue: null, type: 'letter'},
             {value: 'w', secondValue: null, type: 'letter'},
             {value: 'e', secondValue: null, type: 'letter'},
@@ -31,10 +31,10 @@ const englishKeyboardData = {
             {value: 'p', secondValue: null, type: 'letter'},
             {value: '[', secondValue: '{', type: 'symbol'},
             {value: ']', secondValue: '}', type: 'symbol'},
-            {value: 'Enter', secondValue: null, type: 'enter'},
+            {value: 'enter', secondValue: null, type: 'enter'},
         ],
         thirdLine: [
-            {value: 'CapsLock', secondValue: null, type: 'capslock'},
+            {value: 'capslock', secondValue: null, type: 'capslock'},
             {value: 'a', secondValue: null, type: 'letter'},
             {value: 's', secondValue: null, type: 'letter'},
             {value: 'd', secondValue: null, type: 'letter'},
@@ -49,7 +49,7 @@ const englishKeyboardData = {
             {value: '\\', secondValue: '|', type: 'symbol'},
         ],
         fourthLine: [
-            {value: 'Shift', secondValue: null, type: 'shift'},
+            {value: 'shift', secondValue: null, type: 'shift'},
             {value: '`', secondValue: '~', type: 'symbol'},
             {value: 'z', secondValue: null, type: 'letter'},
             {value: 'x', secondValue: null, type: 'letter'},
@@ -61,20 +61,25 @@ const englishKeyboardData = {
             {value: ',', secondValue: '<', type: 'symbol'},
             {value: '.', secondValue: '>', type: 'symbol'},
             {value: '/', secondValue: '?', type: 'symbol'},
-            {value: 'Shift', secondValue: null, type: 'shift'},
+            {value: 'shift', secondValue: null, type: 'shift'},
         ],
         fifthLine: [
             {value: 'fn', secondValue: null, type: 'fn'},
             {value: 'control', secondValue: null, type: 'control'},
             {value: 'option', secondValue: null, type: 'option'},
             {value: 'command', secondValue: null, type: 'command'},
-            {value: 'Space', secondValue: null, type: 'space'},
+            {value: 'space', secondValue: null, type: 'space'},
             {value: 'command', secondValue: null, type: 'command'},
             {value: 'option', secondValue: null, type: 'option'},
             {value: 'arrows', secondValue: null, type: 'arrows'},
         ]
     }
 }
+
+let isShiftActive = false
+let isControlActive = false
+let isOptionActive = false
+let isCommandActive = false
 
 function initApp() {
     createHeader()
@@ -93,6 +98,13 @@ function createHeader() {
     const h1 = document.createElement('h1')
     h1.innerHTML = 'Hello! It\'s virtual keyboard for macOS'
     header.appendChild(h1)
+
+    const textBlock = document.createElement('textarea')
+    textBlock.classList.add('text-block')
+    textBlock.innerHTML = ''
+    // textBlock.disabled = true
+
+    wrapper.appendChild(textBlock)
 }
 
 function createKeyboard(keyboardData) {
@@ -137,7 +149,7 @@ function createKeyboard(keyboardData) {
     const fifthLine = document.createElement('div')
     fifthLine.classList.add('keyboard__line')
     keyboardData.fifthLine.map(i => {
-        if(i.type !== 'arrows') {
+        if (i.type !== 'arrows') {
             const elem = createKey(i)
             fifthLine.appendChild(elem)
         } else {
@@ -152,17 +164,20 @@ function createKey(keyData) {
     const key = document.createElement('div')
     key.classList.add('key')
     key.dataset.type = keyData.type
+    key.addEventListener('click', clickKey)
 
     const firstValue = document.createElement('span')
     firstValue.innerHTML = keyData.value
     firstValue.classList.add('key__first-value')
     key.appendChild(firstValue)
+    key.dataset.value = keyData.value
 
-    if(keyData.secondValue !== null) {
+    if (keyData.secondValue !== null) {
         const secondValue = document.createElement('span')
         secondValue.innerHTML = keyData.secondValue
         secondValue.classList.add('key__second-value')
         key.appendChild(secondValue)
+        key.dataset.secondValue = keyData.secondValue
     }
 
     return key
@@ -187,6 +202,43 @@ function createArrows() {
     secondLine.appendChild(rightKey)
 
     return arrowsWrapper
+}
+
+function clickKey(e) {
+    const textBlock = document.querySelector('.text-block')
+    let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value
+    const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type
+
+    switch (value) {
+        case 'shift':
+            isShiftActive = true
+            return;
+        case 'tab':
+            return;
+        case 'enter':
+            return;
+        case 'capslock':
+            return;
+        case 'backspace':
+            return;
+        case 'fn':
+            return;
+        case 'control':
+            return;
+        case 'option':
+            return;
+        case 'command':
+            return;
+        case 'space':
+            return;
+    }
+
+    if(type === 'letter' && isShiftActive) {
+        value = value.toUpperCase()
+        isShiftActive = false
+    }
+    textBlock.innerHTML = textBlock.innerHTML + value
+    console.log(e)
 }
 
 initApp()

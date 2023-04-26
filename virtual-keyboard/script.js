@@ -103,7 +103,7 @@ function createHeader() {
     const textBlock = document.createElement('textarea')
     textBlock.classList.add('text-block')
     textBlock.innerHTML = ''
-    // textBlock.disabled = true
+    textBlock.disabled = true
 
     wrapper.appendChild(textBlock)
 }
@@ -165,7 +165,8 @@ function createKey(keyData) {
     const key = document.createElement('div')
     key.classList.add('key')
     key.dataset.type = keyData.type
-    key.addEventListener('click', clickKey)
+    key.addEventListener('click', clickKeyHandler)
+    key.addEventListener('transitionend', () => transitionendHandler(key))
 
     const firstValue = document.createElement('span')
     firstValue.innerHTML = keyData.value
@@ -205,10 +206,8 @@ function createArrows() {
     return arrowsWrapper
 }
 
-function clickKey(e) {
+function printKey(value, type) {
     const textBlock = document.querySelector('.text-block')
-    let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value
-    const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type
 
     switch (value) {
         case 'shift':
@@ -247,9 +246,51 @@ function clickKey(e) {
         document.querySelector('.key[data-type="shift"]').classList.remove('key_active')
     } else if(type === 'letter' && isCapslockActive) {
         value = value.toUpperCase()
+    } else if (type === 'symbol' || type === 'number' && isShiftActive) {
+        value = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
     }
     textBlock.innerHTML = textBlock.innerHTML + value
-    console.log(e)
+}
+
+function clickKeyHandler(e) {
+    let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value
+    const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type
+
+    printKey(value, type)
+}
+
+function highlightKey(e) {
+    const lines = document.querySelectorAll('.keyboard__line')
+    lines.forEach(line => {
+        line.childNodes.forEach(child => {
+            if(child.dataset.value === e.key.toLowerCase()) {
+                child.classList.add('key_pressed')
+            }
+        })
+    })
+
+    printTypedLetter(e)
+}
+
+function printTypedLetter(e) {
+    debugger
+    const value = e.key.toLowerCase()
+    let type;
+
+    for (let key in englishKeyboardData.keyboard) {
+        englishKeyboardData.keyboard[key].map(i => i.value === e.key.toLowerCase() ? type = i.type : null)
+    }
+
+    printKey(value, type)
+}
+
+window.addEventListener('keydown', highlightKey)
+document.querySelectorAll('.key').forEach(i => {
+
+})
+
+function transitionendHandler(i) {
+    i.classList.remove('key_pressed')
 }
 
 initApp()

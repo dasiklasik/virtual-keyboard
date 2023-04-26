@@ -20,6 +20,11 @@ h1 {
     border: 1px solid black;
 }
 
+.text-block:disabled {
+    background: #fff;
+    color: #000;
+}
+
 .keyboard {
     display: flex;
     flex-direction: column;
@@ -37,13 +42,15 @@ h1 {
 .key {
     background: lightblue;
     padding: 10px;
-    transition: background 0.3s;
+    transition: background 0.1s;
     cursor: pointer;
 }
 
-.key:active {
+.key:active,
+.key_pressed {
     background: salmon;
 }
+
 
 .key_active {
     border: 1px solid salmon;

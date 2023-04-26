@@ -37,7 +37,8 @@ h1 {
 .key {
     background: lightblue;
     padding: 10px;
-    transition: all 0.3s;
+    transition: background 0.3s;
+    cursor: pointer;
 }
 
 .key:active {

@@ -211,8 +211,8 @@ function clickKey(e) {
 
     switch (value) {
         case 'shift':
-            isShiftActive = true
-            document.querySelector('.key[data-type="shift"]').classList.add('key_active')
+            isShiftActive = !isShiftActive
+            document.querySelector('.key[data-type="shift"]').classList.toggle('key_active')
             return;
         case 'tab':
             return;
@@ -237,6 +237,8 @@ function clickKey(e) {
     if(type === 'letter' && isShiftActive) {
         value = value.toUpperCase()
         isShiftActive = false
+        document.querySelector('.key[data-type="shift"]').classList.remove('key_active')
+
     }
     textBlock.innerHTML = textBlock.innerHTML + value
     console.log(e)

@@ -80,6 +80,7 @@ let isShiftActive = false
 let isControlActive = false
 let isOptionActive = false
 let isCommandActive = false
+let isCapslockActive = false
 
 function initApp() {
     createHeader()
@@ -215,12 +216,17 @@ function clickKey(e) {
             document.querySelector('.key[data-type="shift"]').classList.toggle('key_active')
             return;
         case 'tab':
-            return;
+            value = '\t'
+            break;
         case 'enter':
-            return;
+            value = '\n'
+            break;
         case 'capslock':
+            isCapslockActive = !isCapslockActive
+            document.querySelector('.key[data-type="capslock"]').classList.toggle('key_active')
             return;
         case 'backspace':
+            textBlock.innerHTML = textBlock.innerHTML.slice(0, textBlock.innerHTML.length - 1)
             return;
         case 'fn':
             return;
@@ -231,14 +237,16 @@ function clickKey(e) {
         case 'command':
             return;
         case 'space':
-            return;
+            value = ' '
+            break;
     }
 
     if(type === 'letter' && isShiftActive) {
         value = value.toUpperCase()
         isShiftActive = false
         document.querySelector('.key[data-type="shift"]').classList.remove('key_active')
-
+    } else if(type === 'letter' && isCapslockActive) {
+        value = value.toUpperCase()
     }
     textBlock.innerHTML = textBlock.innerHTML + value
     console.log(e)

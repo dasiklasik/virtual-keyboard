@@ -15,7 +15,7 @@ const englishKeyboardData = {
             {value: '0', secondValue: ')', type: 'number'},
             {value: '-', secondValue: '_', type: 'symbol'},
             {value: '=', secondValue: '+', type: 'symbol'},
-            {value: 'backspace', secondValue: null, type: 'backspace'}
+            {value: 'backspace', secondValue: null, type: 'backspace'},
         ],
         secondLine: [
             {value: 'tab', secondValue: null, type: 'tab'},
@@ -65,14 +65,86 @@ const englishKeyboardData = {
         ],
         fifthLine: [
             {value: 'fn', secondValue: null, type: 'fn'},
-            {value: 'control', secondValue: null, type: 'control'},
-            {value: 'option', secondValue: null, type: 'option'},
             {value: 'command', secondValue: null, type: 'command'},
             {value: 'space', secondValue: null, type: 'space'},
             {value: 'command', secondValue: null, type: 'command'},
-            {value: 'option', secondValue: null, type: 'option'},
             {value: 'arrows', secondValue: null, type: 'arrows'},
         ]
+    }
+}
+
+const russianKeyboardData = {
+    h1Text: 'Привет! Это виртуальная клавиатура для macOS',
+    keyboard: {
+        firstLine: [
+            {value: '>', secondValue: '<', type: 'symbol'},
+            {value: '1', secondValue: '!', type: 'number'},
+            {value: '2', secondValue: '"', type: 'number'},
+            {value: '3', secondValue: '№', type: 'number'},
+            {value: '4', secondValue: '%', type: 'number'},
+            {value: '5', secondValue: ':', type: 'number'},
+            {value: '6', secondValue: ',', type: 'number'},
+            {value: '7', secondValue: '.', type: 'number'},
+            {value: '8', secondValue: ';', type: 'number'},
+            {value: '9', secondValue: '(', type: 'number'},
+            {value: '0', secondValue: ')', type: 'number'},
+            {value: '-', secondValue: '_', type: 'symbol'},
+            {value: '=', secondValue: '+', type: 'symbol'},
+            {value: 'backspace', secondValue: null, type: 'backspace'},
+        ],
+        secondLine: [
+            {value: 'tab', secondValue: null, type: 'tab'},
+            {value: 'й', secondValue: null, type: 'letter'},
+            {value: 'ц', secondValue: null, type: 'letter'},
+            {value: 'у', secondValue: null, type: 'letter'},
+            {value: 'к', secondValue: null, type: 'letter'},
+            {value: 'е', secondValue: null, type: 'letter'},
+            {value: 'н', secondValue: null, type: 'letter'},
+            {value: 'г', secondValue: null, type: 'letter'},
+            {value: 'ш', secondValue: null, type: 'letter'},
+            {value: 'щ', secondValue: null, type: 'letter'},
+            {value: 'з', secondValue: null, type: 'letter'},
+            {value: 'х', secondValue: null, type: 'letter'},
+            {value: 'ъ', secondValue: null, type: 'letter'},
+            {value: 'enter', secondValue: null, type: 'enter'},
+        ],
+        thirdLine: [
+            {value: 'capslock', secondValue: null, type: 'capslock'},
+            {value: 'ф', secondValue: null, type: 'letter'},
+            {value: 'ы', secondValue: null, type: 'letter'},
+            {value: 'в', secondValue: null, type: 'letter'},
+            {value: 'а', secondValue: null, type: 'letter'},
+            {value: 'п', secondValue: null, type: 'letter'},
+            {value: 'р', secondValue: null, type: 'letter'},
+            {value: 'о', secondValue: null, type: 'letter'},
+            {value: 'л', secondValue: null, type: 'letter'},
+            {value: 'д', secondValue: null, type: 'letter'},
+            {value: 'ж', secondValue: null, type: 'letter'},
+            {value: 'э', secondValue: null, type: 'letter'},
+            {value: 'ё', secondValue: null, type: 'letter'},
+        ],
+        fourthLine: [
+            {value: 'shift', secondValue: null, type: 'shift'},
+            {value: ']', secondValue: '[', type: 'symbol'},
+            {value: 'я', secondValue: null, type: 'letter'},
+            {value: 'ч', secondValue: null, type: 'letter'},
+            {value: 'с', secondValue: null, type: 'letter'},
+            {value: 'м', secondValue: null, type: 'letter'},
+            {value: 'и', secondValue: null, type: 'letter'},
+            {value: 'т', secondValue: null, type: 'letter'},
+            {value: 'ь', secondValue: null, type: 'letter'},
+            {value: 'б', secondValue: null, type: 'letter'},
+            {value: 'ю', secondValue: null, type: 'letter'},
+            {value: '/', secondValue: '?', type: 'symbol'},
+            {value: 'shift', secondValue: null, type: 'shift'},
+        ],
+        fifthLine: [
+            {value: 'fn', secondValue: null, type: 'fn'},
+            {value: 'command', secondValue: null, type: 'command'},
+            {value: 'space', secondValue: null, type: 'space'},
+            {value: 'command', secondValue: null, type: 'command'},
+            {value: 'arrows', secondValue: null, type: 'arrows'},
+        ],
     }
 }
 
@@ -82,13 +154,16 @@ let isOptionActive = false
 let isCommandActive = false
 let isCapslockActive = false
 
+let isEnglish = false
+
 function initApp() {
-    createHeader()
-    createKeyboard(englishKeyboardData.keyboard)
+    let data = isEnglish ? englishKeyboardData : russianKeyboardData
+    createHeader(data.h1Text)
+    createKeyboard(data.keyboard)
 }
 
 
-function createHeader() {
+function createHeader(text) {
     const wrapper = document.createElement('div')
     wrapper.classList.add('wrapper')
     document.body.appendChild(wrapper)
@@ -97,7 +172,7 @@ function createHeader() {
     wrapper.appendChild(header)
 
     const h1 = document.createElement('h1')
-    h1.innerHTML = 'Hello! It\'s virtual keyboard for macOS'
+    h1.innerHTML = text
     header.appendChild(h1)
 
     const textBlock = document.createElement('textarea')

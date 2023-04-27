@@ -260,6 +260,14 @@ function createKey(keyData) {
     key.addEventListener('click', clickKeyHandler)
     key.addEventListener('transitionend', () => transitionendHandler(key))
 
+    if(keyData.image) {
+        const image = document.createElement('img')
+        image.classList.add('key__icon')
+        image.src = keyData.image
+        key.appendChild(image)
+        return key
+    }
+
     const firstValue = document.createElement('span')
     firstValue.innerHTML = keyData.value
     firstValue.classList.add('key__first-value')
@@ -283,17 +291,19 @@ function createArrows() {
 
     const firstLine = document.createElement('div')
     firstLine.classList.add('arrows__line')
-    const upKey = createKey({value: 'up', secondValue: null, type: 'arrow'})
+    const upKey = createKey({value: 'arrowup', secondValue: null, type: 'arrow', image: './assets/up.png'})
     firstLine.appendChild(upKey)
+    arrowsWrapper.appendChild(firstLine)
 
     const secondLine = document.createElement('div')
     secondLine.classList.add('arrows__line')
-    const leftKey = createKey({value: 'left', secondValue: null, type: 'arrow'})
+    const leftKey = createKey({value: 'arrowleft', secondValue: null, type: 'arrow', image: './assets/left.png'})
     secondLine.appendChild(leftKey)
-    const downKey = createKey({value: 'down', secondValue: null, type: 'arrow'})
+    const downKey = createKey({value: 'arrowdown', secondValue: null, type: 'arrow', image: './assets/down.png'})
     secondLine.appendChild(downKey)
-    const rightKey = createKey({value: 'right', secondValue: null, type: 'arrow'})
+    const rightKey = createKey({value: 'arrowright', secondValue: null, type: 'arrow', image: './assets/right.png'})
     secondLine.appendChild(rightKey)
+    arrowsWrapper.appendChild(secondLine)
 
     return arrowsWrapper
 }

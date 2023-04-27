@@ -50,6 +50,7 @@ h1 {
     padding: 10px;
     transition: background 0.1s;
     cursor: pointer;
+    height: 60px;
 }
 
 .key:active,
@@ -66,7 +67,6 @@ h1 {
 .key[data-type="letter"],
 .key[data-type="symbol"] {
     width: 60px;
-    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,6 +79,10 @@ h1 {
     align-items: start;
 }
 
+.key__icon {
+    width: 10px;
+}
+
 .key__first-value {
     font-size: 25px;
 }
@@ -86,7 +90,6 @@ h1 {
 .key__second-value {
     font-size: 10px;
 }
-
 
 .key[data-type="number"].key_active-shift,
 .key[data-type="symbol"].key_active-shift {
@@ -96,4 +99,15 @@ h1 {
 
 .key_active-shift .key__second-value {
     font-size: 25px;
+}
+
+.arrows__line {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrows .key {
+    height: 30px;
+    padding: 5px 20px;
 }

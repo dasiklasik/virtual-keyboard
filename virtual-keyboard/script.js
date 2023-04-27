@@ -265,6 +265,7 @@ function createKey(keyData) {
         image.classList.add('key__icon')
         image.src = keyData.image
         key.appendChild(image)
+        key.dataset.value = keyData.value
         return key
     }
 
@@ -309,6 +310,7 @@ function createArrows() {
 }
 
 function printKey(value, type, secondValue) {
+
     const textBlock = document.querySelector('.text-block')
 
     switch (value) {
@@ -328,6 +330,7 @@ function printKey(value, type, secondValue) {
         case 'capslock':
             isCapslockActive = !isCapslockActive
             document.querySelector('.key[data-type="capslock"]').classList.toggle('key_active')
+            changeValues()
             return;
         case 'backspace':
             textBlock.innerHTML = textBlock.innerHTML.slice(0, textBlock.innerHTML.length - 1)
@@ -339,10 +342,18 @@ function printKey(value, type, secondValue) {
             localStorage.setItem('language', language)
             initApp()
             return;
-        case 'control':
-            return;
-        case 'option':
-            return;
+        case 'arrowup':
+            value = '&uarr;'
+            break;
+        case 'arrowdown':
+            value = '&darr;'
+            break;
+        case 'arrowleft':
+            value = '&larr;'
+            break;
+        case 'arrowright':
+            value = '&rarr;'
+            break;
         case 'command':
             return;
         case 'space':
@@ -414,6 +425,10 @@ function changeValues() {
                 i.childNodes[0].style.display = 'none';
                 i.classList.add('key_active-shift')
             } else if (i.dataset.type === 'letter') {
+                i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toUpperCase();
+            }
+        } else if (isCapslockActive) {
+            if (i.dataset.type === 'letter') {
                 i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toUpperCase();
             }
         } else {

@@ -156,7 +156,14 @@ let isOptionActive = false
 let isCommandActive = false
 let isCapslockActive = false
 
-let isEnglish = false
+let isEnglish;
+
+if(localStorage.getItem('language')) {
+    isEnglish = localStorage.getItem('language') === 'english'
+} else {
+    isEnglish = false
+    localStorage.setItem('language', 'russian')
+}
 
 function initApp() {
     let data = isEnglish ? englishKeyboardData : russianKeyboardData
@@ -294,7 +301,10 @@ function printKey(value, type) {
     switch (value) {
         case 'shift':
             isShiftActive = !isShiftActive
-            document.querySelector('.key[data-type="shift"]').classList.toggle('key_active')
+            document.querySelectorAll('.key[data-type="shift"]').forEach(i => {
+                i.classList.toggle('key_active')
+            })
+            changeValues()
             return;
         case 'tab':
             value = '\t'
@@ -309,7 +319,11 @@ function printKey(value, type) {
         case 'backspace':
             textBlock.innerHTML = textBlock.innerHTML.slice(0, textBlock.innerHTML.length - 1)
             return;
-        case 'fn':
+        case 'EN':
+        case 'RU':
+            isEnglish = !isEnglish
+            const language = isEnglish ? 'english' : 'russian'
+            localStorage.setItem('language', language)
             return;
         case 'control':
             return;
@@ -325,7 +339,10 @@ function printKey(value, type) {
     if(type === 'letter' && isShiftActive) {
         value = value.toUpperCase()
         isShiftActive = false
-        document.querySelector('.key[data-type="shift"]').classList.remove('key_active')
+        document.querySelectorAll('.key[data-type="shift"]').forEach(i => {
+            i.classList.remove('key_active')
+        })
+        changeValues()
     } else if(type === 'letter' && isCapslockActive) {
         value = value.toUpperCase()
     } else if (type === 'symbol' || type === 'number' && isShiftActive) {
@@ -355,7 +372,7 @@ function highlightKey(e) {
 }
 
 function printTypedLetter(e) {
-    debugger
+
     const value = e.key.toLowerCase() === 'meta' ? 'command' : e.key.toLowerCase()
     let type;
 
@@ -372,6 +389,26 @@ function transitionendHandler(i) {
     i.classList.remove('key_pressed')
 }
 
+function changeValues() {
+    const keys = document.querySelectorAll('.key')
 
+    keys.forEach(i => {
+        if(isShiftActive) {
+            if(i.childNodes.length === 2) {
+                i.childNodes[0].style.display = 'none';
+                i.classList.add('key_active-shift')
+            } else if (i.dataset.type === 'letter') {
+                i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toUpperCase();
+            }
+        } else {
+            if(i.childNodes.length === 2) {
+                i.childNodes[0].style.display = '';
+                i.classList.remove('key_active-shift')
+            } else if (i.dataset.type === 'letter') {
+                i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toLowerCase();
+            }
+        }
+    })
+}
 
 initApp()

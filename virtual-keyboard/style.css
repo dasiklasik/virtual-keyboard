@@ -86,3 +86,14 @@ h1 {
 .key__second-value {
     font-size: 10px;
 }
+
+
+.key[data-type="number"].key_active-shift,
+.key[data-type="symbol"].key_active-shift {
+    justify-content: center;
+    align-items: center;
+}
+
+.key_active-shift .key__second-value {
+    font-size: 25px;
+}

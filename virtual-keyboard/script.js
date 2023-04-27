@@ -166,6 +166,9 @@ if(localStorage.getItem('language')) {
 }
 
 function initApp() {
+    if(document.querySelector('.wrapper')) {
+        document.querySelector('.wrapper').remove()
+    }
     let data = isEnglish ? englishKeyboardData : russianKeyboardData
     createHeader(data.h1Text, data.languageChangeInstruction)
     createKeyboard(data.keyboard)
@@ -295,7 +298,7 @@ function createArrows() {
     return arrowsWrapper
 }
 
-function printKey(value, type) {
+function printKey(value, type, secondValue) {
     const textBlock = document.querySelector('.text-block')
 
     switch (value) {
@@ -324,6 +327,7 @@ function printKey(value, type) {
             isEnglish = !isEnglish
             const language = isEnglish ? 'english' : 'russian'
             localStorage.setItem('language', language)
+            initApp()
             return;
         case 'control':
             return;
@@ -346,16 +350,17 @@ function printKey(value, type) {
     } else if(type === 'letter' && isCapslockActive) {
         value = value.toUpperCase()
     } else if (type === 'symbol' || type === 'number' && isShiftActive) {
-        value = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
+        value = secondValue
     }
     textBlock.innerHTML = textBlock.innerHTML + value
 }
 
 function clickKeyHandler(e) {
     let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value
+    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
     const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type
 
-    printKey(value, type)
+    printKey(value, type, secondValue)
 }
 
 function highlightKey(e) {
@@ -374,13 +379,14 @@ function highlightKey(e) {
 function printTypedLetter(e) {
 
     const value = e.key.toLowerCase() === 'meta' ? 'command' : e.key.toLowerCase()
+    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
     let type;
 
     for (let key in englishKeyboardData.keyboard) {
         englishKeyboardData.keyboard[key].map(i => i.value === e.key.toLowerCase() ? type = i.type : null)
     }
 
-    printKey(value, type)
+    printKey(value, type, secondValue)
 }
 
 window.addEventListener('keydown', highlightKey)

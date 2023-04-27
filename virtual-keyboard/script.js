@@ -349,7 +349,7 @@ function highlightKey(e) {
 
 function printTypedLetter(e) {
     debugger
-    const value = e.key.toLowerCase()
+    const value = e.key.toLowerCase() === 'meta' ? 'command' : e.key.toLowerCase()
     let type;
 
     for (let key in englishKeyboardData.keyboard) {
@@ -367,5 +367,7 @@ document.querySelectorAll('.key').forEach(i => {
 function transitionendHandler(i) {
     i.classList.remove('key_pressed')
 }
+
+
 
 initApp()

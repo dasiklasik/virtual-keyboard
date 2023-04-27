@@ -1,5 +1,6 @@
 const englishKeyboardData = {
     h1Text: 'Hello! It\'s virtual keyboard for macOS',
+    languageChangeInstruction: 'Press RU button to change language to Russian',
     keyboard: {
         firstLine: [
             {value: '§', secondValue: '±', type: 'symbol'},
@@ -64,7 +65,7 @@ const englishKeyboardData = {
             {value: 'shift', secondValue: null, type: 'shift'},
         ],
         fifthLine: [
-            {value: 'fn', secondValue: null, type: 'fn'},
+            {value: 'RU', secondValue: null, type: 'RU'},
             {value: 'command', secondValue: null, type: 'command'},
             {value: 'space', secondValue: null, type: 'space'},
             {value: 'command', secondValue: null, type: 'command'},
@@ -75,6 +76,7 @@ const englishKeyboardData = {
 
 const russianKeyboardData = {
     h1Text: 'Привет! Это виртуальная клавиатура для macOS',
+    languageChangeInstruction: 'Нажми на кнопку EN, чтобы сменить язык на английский',
     keyboard: {
         firstLine: [
             {value: '>', secondValue: '<', type: 'symbol'},
@@ -139,7 +141,7 @@ const russianKeyboardData = {
             {value: 'shift', secondValue: null, type: 'shift'},
         ],
         fifthLine: [
-            {value: 'fn', secondValue: null, type: 'fn'},
+            {value: 'EN', secondValue: null, type: 'EN'},
             {value: 'command', secondValue: null, type: 'command'},
             {value: 'space', secondValue: null, type: 'space'},
             {value: 'command', secondValue: null, type: 'command'},
@@ -158,12 +160,12 @@ let isEnglish = false
 
 function initApp() {
     let data = isEnglish ? englishKeyboardData : russianKeyboardData
-    createHeader(data.h1Text)
+    createHeader(data.h1Text, data.languageChangeInstruction)
     createKeyboard(data.keyboard)
 }
 
 
-function createHeader(text) {
+function createHeader(text, instruction) {
     const wrapper = document.createElement('div')
     wrapper.classList.add('wrapper')
     document.body.appendChild(wrapper)
@@ -174,6 +176,11 @@ function createHeader(text) {
     const h1 = document.createElement('h1')
     h1.innerHTML = text
     header.appendChild(h1)
+
+    const p = document.createElement('p')
+    p.classList.add('description')
+    p.innerHTML = instruction
+    wrapper.appendChild(p)
 
     const textBlock = document.createElement('textarea')
     textBlock.classList.add('text-block')
@@ -360,9 +367,6 @@ function printTypedLetter(e) {
 }
 
 window.addEventListener('keydown', highlightKey)
-document.querySelectorAll('.key').forEach(i => {
-
-})
 
 function transitionendHandler(i) {
     i.classList.remove('key_pressed')

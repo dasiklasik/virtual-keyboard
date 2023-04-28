@@ -72,7 +72,7 @@ const englishKeyboardData = {
             {value: 'arrows', secondValue: null, type: 'arrows'},
         ]
     }
-}
+};
 
 const russianKeyboardData = {
     h1Text: 'Привет! Это виртуальная клавиатура для macOS',
@@ -148,282 +148,282 @@ const russianKeyboardData = {
             {value: 'arrows', secondValue: null, type: 'arrows'},
         ],
     }
-}
+};
 
-let isShiftActive = false
-let isControlActive = false
-let isOptionActive = false
-let isCommandActive = false
-let isCapslockActive = false
+let isShiftActive = false;
+let isControlActive = false;
+let isOptionActive = false;
+let isCommandActive = false;
+let isCapslockActive = false;
 
 let isEnglish;
 
 if(localStorage.getItem('language')) {
-    isEnglish = localStorage.getItem('language') === 'english'
+    isEnglish = localStorage.getItem('language') === 'english';
 } else {
-    isEnglish = false
-    localStorage.setItem('language', 'russian')
+    isEnglish = false;
+    localStorage.setItem('language', 'russian');
 }
 
 function initApp() {
     if(document.querySelector('.wrapper')) {
-        document.querySelector('.wrapper').remove()
+        document.querySelector('.wrapper').remove();
     }
-    let data = isEnglish ? englishKeyboardData : russianKeyboardData
-    createHeader(data.h1Text, data.languageChangeInstruction)
-    createKeyboard(data.keyboard)
+    let data = isEnglish ? englishKeyboardData : russianKeyboardData;
+    createHeader(data.h1Text, data.languageChangeInstruction);
+    createKeyboard(data.keyboard);
 }
 
 
 function createHeader(text, instruction) {
-    const wrapper = document.createElement('div')
-    wrapper.classList.add('wrapper')
-    document.body.appendChild(wrapper)
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('wrapper');
+    document.body.appendChild(wrapper);
 
-    const header = document.createElement('header')
-    wrapper.appendChild(header)
+    const header = document.createElement('header');
+    wrapper.appendChild(header);
 
-    const h1 = document.createElement('h1')
-    h1.innerHTML = text
-    header.appendChild(h1)
+    const h1 = document.createElement('h1');
+    h1.innerHTML = text;
+    header.appendChild(h1);
 
-    const p = document.createElement('p')
-    p.classList.add('description')
-    p.innerHTML = instruction
-    wrapper.appendChild(p)
+    const p = document.createElement('p');
+    p.classList.add('description');
+    p.innerHTML = instruction;
+    wrapper.appendChild(p);
 
-    const textBlock = document.createElement('textarea')
-    textBlock.classList.add('text-block')
-    textBlock.innerHTML = ''
-    textBlock.disabled = true
+    const textBlock = document.createElement('textarea');
+    textBlock.classList.add('text-block');
+    textBlock.innerHTML = '';
+    textBlock.disabled = true;
 
-    wrapper.appendChild(textBlock)
+    wrapper.appendChild(textBlock);
 }
 
 function createKeyboard(keyboardData) {
 
-    const keyboard = document.createElement('div')
-    keyboard.classList.add('keyboard')
-    document.querySelector('.wrapper').appendChild(keyboard)
+    const keyboard = document.createElement('div');
+    keyboard.classList.add('keyboard');
+    document.querySelector('.wrapper').appendChild(keyboard);
 
-    const firstLine = document.createElement('div')
-    firstLine.classList.add('keyboard__line')
+    const firstLine = document.createElement('div');
+    firstLine.classList.add('keyboard__line');
     keyboardData.firstLine.map(i => {
-        const elem = createKey(i)
-        firstLine.appendChild(elem)
-    })
-    keyboard.appendChild(firstLine)
+        const elem = createKey(i);
+        firstLine.appendChild(elem);
+    });
+    keyboard.appendChild(firstLine);
 
-    const secondLine = document.createElement('div')
-    secondLine.classList.add('keyboard__line')
+    const secondLine = document.createElement('div');
+    secondLine.classList.add('keyboard__line');
     keyboardData.secondLine.map(i => {
-        const elem = createKey(i)
-        secondLine.appendChild(elem)
+        const elem = createKey(i);
+        secondLine.appendChild(elem);
     })
-    keyboard.appendChild(secondLine)
+    keyboard.appendChild(secondLine);
 
 
-    const thirdLine = document.createElement('div')
-    thirdLine.classList.add('keyboard__line')
+    const thirdLine = document.createElement('div');
+    thirdLine.classList.add('keyboard__line');
     keyboardData.thirdLine.map(i => {
-        const elem = createKey(i)
-        thirdLine.appendChild(elem)
-    })
-    keyboard.appendChild(thirdLine)
+        const elem = createKey(i);
+        thirdLine.appendChild(elem);
+    });
+    keyboard.appendChild(thirdLine);
 
-    const fourthLine = document.createElement('div')
-    fourthLine.classList.add('keyboard__line')
+    const fourthLine = document.createElement('div');
+    fourthLine.classList.add('keyboard__line');
     keyboardData.fourthLine.map(i => {
-        const elem = createKey(i)
-        fourthLine.appendChild(elem)
-    })
-    keyboard.appendChild(fourthLine)
+        const elem = createKey(i);
+        fourthLine.appendChild(elem);
+    });
+    keyboard.appendChild(fourthLine);
 
-    const fifthLine = document.createElement('div')
-    fifthLine.classList.add('keyboard__line')
+    const fifthLine = document.createElement('div');
+    fifthLine.classList.add('keyboard__line');
     keyboardData.fifthLine.map(i => {
         if (i.type !== 'arrows') {
-            const elem = createKey(i)
-            fifthLine.appendChild(elem)
+            const elem = createKey(i);
+            fifthLine.appendChild(elem);
         } else {
-            const elem = createArrows()
-            fifthLine.appendChild(elem)
+            const elem = createArrows();
+            fifthLine.appendChild(elem);
         }
-    })
-    keyboard.appendChild(fifthLine)
+    });
+    keyboard.appendChild(fifthLine);
 }
 
 function createKey(keyData) {
-    const key = document.createElement('div')
-    key.classList.add('key')
-    key.dataset.type = keyData.type
-    key.addEventListener('click', clickKeyHandler)
-    key.addEventListener('transitionend', () => transitionendHandler(key))
+    const key = document.createElement('div');
+    key.classList.add('key');
+    key.dataset.type = keyData.type;
+    key.addEventListener('click', clickKeyHandler);
+    key.addEventListener('transitionend', () => transitionendHandler(key));
 
     if(keyData.image) {
-        const image = document.createElement('img')
-        image.classList.add('key__icon')
-        image.src = keyData.image
-        key.appendChild(image)
-        key.dataset.value = keyData.value
-        return key
+        const image = document.createElement('img');
+        image.classList.add('key__icon');
+        image.src = keyData.image;
+        key.appendChild(image);
+        key.dataset.value = keyData.value;
+        return key;
     }
 
-    const firstValue = document.createElement('span')
-    firstValue.innerHTML = keyData.value
-    firstValue.classList.add('key__first-value')
-    key.appendChild(firstValue)
-    key.dataset.value = keyData.value
+    const firstValue = document.createElement('span');
+    firstValue.innerHTML = keyData.value;
+    firstValue.classList.add('key__first-value');
+    key.appendChild(firstValue);
+    key.dataset.value = keyData.value;
 
     if (keyData.secondValue !== null) {
-        const secondValue = document.createElement('span')
-        secondValue.innerHTML = keyData.secondValue
-        secondValue.classList.add('key__second-value')
-        key.appendChild(secondValue)
-        key.dataset.secondValue = keyData.secondValue
+        const secondValue = document.createElement('span');
+        secondValue.innerHTML = keyData.secondValue;
+        secondValue.classList.add('key__second-value');
+        key.appendChild(secondValue);
+        key.dataset.secondValue = keyData.secondValue;
     }
 
-    return key
+    return key;
 }
 
 function createArrows() {
-    const arrowsWrapper = document.createElement('div')
-    arrowsWrapper.classList.add('arrows')
+    const arrowsWrapper = document.createElement('div');
+    arrowsWrapper.classList.add('arrows');
 
-    const firstLine = document.createElement('div')
-    firstLine.classList.add('arrows__line')
-    const upKey = createKey({value: 'arrowup', secondValue: null, type: 'arrow', image: './assets/up.png'})
-    firstLine.appendChild(upKey)
-    arrowsWrapper.appendChild(firstLine)
+    const firstLine = document.createElement('div');
+    firstLine.classList.add('arrows__line');
+    const upKey = createKey({value: 'arrowup', secondValue: null, type: 'arrow', image: './assets/up.png'});
+    firstLine.appendChild(upKey);
+    arrowsWrapper.appendChild(firstLine);
 
-    const secondLine = document.createElement('div')
-    secondLine.classList.add('arrows__line')
-    const leftKey = createKey({value: 'arrowleft', secondValue: null, type: 'arrow', image: './assets/left.png'})
-    secondLine.appendChild(leftKey)
-    const downKey = createKey({value: 'arrowdown', secondValue: null, type: 'arrow', image: './assets/down.png'})
-    secondLine.appendChild(downKey)
-    const rightKey = createKey({value: 'arrowright', secondValue: null, type: 'arrow', image: './assets/right.png'})
-    secondLine.appendChild(rightKey)
-    arrowsWrapper.appendChild(secondLine)
+    const secondLine = document.createElement('div');
+    secondLine.classList.add('arrows__line');
+    const leftKey = createKey({value: 'arrowleft', secondValue: null, type: 'arrow', image: './assets/left.png'});
+    secondLine.appendChild(leftKey);
+    const downKey = createKey({value: 'arrowdown', secondValue: null, type: 'arrow', image: './assets/down.png'});
+    secondLine.appendChild(downKey);
+    const rightKey = createKey({value: 'arrowright', secondValue: null, type: 'arrow', image: './assets/right.png'});
+    secondLine.appendChild(rightKey);
+    arrowsWrapper.appendChild(secondLine);
 
-    return arrowsWrapper
+    return arrowsWrapper;
 }
 
 function printKey(value, type, secondValue) {
 
-    const textBlock = document.querySelector('.text-block')
+    const textBlock = document.querySelector('.text-block');
 
     switch (value) {
         case 'shift':
-            isShiftActive = !isShiftActive
+            isShiftActive = !isShiftActive;
             document.querySelectorAll('.key[data-type="shift"]').forEach(i => {
-                i.classList.toggle('key_active')
-            })
-            changeValues()
+                i.classList.toggle('key_active');
+            });
+            changeValues();
             return;
         case 'tab':
-            value = '\t'
+            value = '\t';
             break;
         case 'enter':
-            value = '\n'
+            value = '\n';
             break;
         case 'capslock':
-            isCapslockActive = !isCapslockActive
-            document.querySelector('.key[data-type="capslock"]').classList.toggle('key_active')
-            changeValues()
+            isCapslockActive = !isCapslockActive;
+            document.querySelector('.key[data-type="capslock"]').classList.toggle('key_active');
+            changeValues();
             return;
         case 'backspace':
-            textBlock.innerHTML = textBlock.innerHTML.slice(0, textBlock.innerHTML.length - 1)
+            textBlock.innerHTML = textBlock.innerHTML.slice(0, textBlock.innerHTML.length - 1);
             return;
         case 'EN':
         case 'RU':
-            isEnglish = !isEnglish
-            const language = isEnglish ? 'english' : 'russian'
-            localStorage.setItem('language', language)
-            initApp()
+            isEnglish = !isEnglish;
+            const language = isEnglish ? 'english' : 'russian';
+            localStorage.setItem('language', language);
+            initApp();
             return;
         case 'arrowup':
-            value = '&uarr;'
+            value = '&uarr;';
             break;
         case 'arrowdown':
-            value = '&darr;'
+            value = '&darr;';
             break;
         case 'arrowleft':
-            value = '&larr;'
+            value = '&larr;';
             break;
         case 'arrowright':
-            value = '&rarr;'
+            value = '&rarr;';
             break;
         case 'command':
             return;
         case 'space':
-            value = ' '
+            value = ' ';
             break;
     }
 
     if(type === 'letter' && isShiftActive) {
-        value = value.toUpperCase()
-        isShiftActive = false
+        value = value.toUpperCase();
+        isShiftActive = false;
         document.querySelectorAll('.key[data-type="shift"]').forEach(i => {
-            i.classList.remove('key_active')
-        })
+            i.classList.remove('key_active');
+        });
         changeValues()
     } else if(type === 'letter' && isCapslockActive) {
-        value = value.toUpperCase()
+        value = value.toUpperCase();
     } else if (type === 'symbol' || type === 'number' && isShiftActive) {
-        value = secondValue
+        value = secondValue;
     }
-    textBlock.innerHTML = textBlock.innerHTML + value
+    textBlock.innerHTML = textBlock.innerHTML + value;
 }
 
 function clickKeyHandler(e) {
-    let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value
-    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
-    const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type
+    let value = e.target.dataset.value ? e.target.dataset.value : e.target.parentElement.dataset.value;
+    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue;
+    const type = e.target.dataset.type ? e.target.dataset.type : e.target.parentElement.dataset.type;
 
-    printKey(value, type, secondValue)
+    printKey(value, type, secondValue);
 }
 
 function highlightKey(e) {
-    const lines = document.querySelectorAll('.keyboard__line')
+    const lines = document.querySelectorAll('.keyboard__line');
     lines.forEach(line => {
         line.childNodes.forEach(child => {
             if(child.dataset.value === e.key.toLowerCase()) {
-                child.classList.add('key_pressed')
+                child.classList.add('key_pressed');
             }
-        })
-    })
+        });
+    });
 
-    printTypedLetter(e)
+    printTypedLetter(e);
 }
 
 function printTypedLetter(e) {
 
-    const value = e.key.toLowerCase() === 'meta' ? 'command' : e.key.toLowerCase()
-    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue
+    const value = e.key.toLowerCase() === 'meta' ? 'command' : e.key.toLowerCase();
+    let secondValue = e.target.dataset.secondValue ? e.target.dataset.secondValue : e.target.parentElement.dataset.secondValue;
     let type;
 
     for (let key in englishKeyboardData.keyboard) {
-        englishKeyboardData.keyboard[key].map(i => i.value === e.key.toLowerCase() ? type = i.type : null)
+        englishKeyboardData.keyboard[key].map(i => i.value === e.key.toLowerCase() ? type = i.type : null);
     }
 
-    printKey(value, type, secondValue)
+    printKey(value, type, secondValue);
 }
 
-window.addEventListener('keydown', highlightKey)
+window.addEventListener('keydown', highlightKey);
 
 function transitionendHandler(i) {
-    i.classList.remove('key_pressed')
+    i.classList.remove('key_pressed');
 }
 
 function changeValues() {
-    const keys = document.querySelectorAll('.key')
+    const keys = document.querySelectorAll('.key');
 
     keys.forEach(i => {
         if(isShiftActive) {
             if(i.childNodes.length === 2) {
                 i.childNodes[0].style.display = 'none';
-                i.classList.add('key_active-shift')
+                i.classList.add('key_active-shift');
             } else if (i.dataset.type === 'letter') {
                 i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toUpperCase();
             }
@@ -434,12 +434,12 @@ function changeValues() {
         } else {
             if(i.childNodes.length === 2) {
                 i.childNodes[0].style.display = '';
-                i.classList.remove('key_active-shift')
+                i.classList.remove('key_active-shift');
             } else if (i.dataset.type === 'letter') {
                 i.childNodes[0].innerHTML = i.childNodes[0].innerHTML.toLowerCase();
             }
         }
-    })
+    });
 }
 
-initApp()
+initApp();

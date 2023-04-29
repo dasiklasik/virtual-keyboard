@@ -459,10 +459,13 @@ function highlightKey(e) {
       document.querySelector('.key[data-value="arrowdown"]').classList.add('key_pressed');
     case ' ':
       document.querySelector('.key[data-value="space"]').classList.add('key_pressed');
+      break;
     case 'meta':
       document.querySelectorAll('.key[data-value="command"]').forEach((i) => {
         i.classList.add('key_pressed');
       })
+      break;
+    default: break;
   }
 
   const lines = document.querySelectorAll('.keyboard__line');

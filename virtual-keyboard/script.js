@@ -404,6 +404,19 @@ function printKey(value, type, secondValue) {
     case 'space':
       innerValue = ' ';
       break;
+    case 'f12':
+    case 'f1':
+    case 'f2':
+    case 'f3':
+    case 'f4':
+    case 'f5':
+    case 'f6':
+    case 'f7':
+    case 'f8':
+    case 'f9':
+    case 'f10':
+    case 'f11':
+    return;
     default:
       break;
   }
@@ -443,7 +456,7 @@ function printTypedLetter(e) {
 
 function highlightKey(e) {
 
-  console.log(e.key.toLowerCase())
+  console.log(e)
 
   switch (e.key.toLowerCase()) {
     case 'arrowup':
@@ -466,13 +479,18 @@ function highlightKey(e) {
         i.classList.add('key_pressed');
       })
       break;
+    case 'control':
+    case 'option':
+    case 'alt':
+      return;
     default: break;
   }
-
   const lines = document.querySelectorAll('.keyboard__line');
   lines.forEach((line) => {
     line.childNodes.forEach((child) => {
-      if (child.dataset.value === e.key.toLowerCase()) {
+      if (`Key${child.dataset.value?.toUpperCase()}` === e.code) {
+        child.classList.add('key_pressed');
+      } else if (child.dataset.value === e.key.toLowerCase()) {
         child.classList.add('key_pressed');
       }
     });

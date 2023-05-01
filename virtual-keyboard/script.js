@@ -457,6 +457,7 @@ function highlightKey(e) {
       break;
     case 'arrowdown':
       document.querySelector('.key[data-value="arrowdown"]').classList.add('key_pressed');
+      break;
     case ' ':
       document.querySelector('.key[data-value="space"]').classList.add('key_pressed');
       break;
